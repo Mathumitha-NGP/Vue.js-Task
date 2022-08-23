@@ -1,145 +1,193 @@
 <template>
-  <div class="div1">
-    <v-col sm="9">
-    <v-text-field
-            value=""
-            v-model="name"
-            label="Name"
-            counter
-            maxlength="30"
-            :rules="[rules.required, rules.name]"
-            outlined
-          ></v-text-field>
-
-    <v-text-field
-            value=""
-            v-model="email"
-            label="Email"
-            counter
-            maxlength="50"
-            :rules="[rules.required, rules.email]"
-            outlined
-          ></v-text-field>
-    </v-col>
-
-   <v-row>
-   <v-col sm="5">
-   <v-text-field
-            value=""
-            v-model="pswd_length"
-            label="Password length"
-            :rules="[rules.required,rules.Password_length]"
-            outlined
-          ></v-text-field>
-
-    </v-col>
-    <v-col>
-     <v-btn @click="pswd_generate"
-        depressed
-        color="primary"
-      >Generate password</v-btn>
-    </v-col>
-    
-    </v-row>
-    
-    <v-col>
-    <v-text-field
-            value=''
-            v-model="generatedPassword"
-            label="Generated Password"
-            outlined
-            readonly
-          ></v-text-field>
-    </v-col>
-
-    
+  <div>
     <v-container fluid>
-    <label>Gender:</label>
-    <v-radio-group
-     :rules="[rules.required]"
-      v-model="row"
-      row
-    >
-      <v-radio
-        label="Male"
-        color="blue"
-        value="radio-1"
-      ></v-radio>
-      <v-radio
-        label="Female"
-        color="pink lighten-2"
-        value="radio-2"
-      ></v-radio>
-    </v-radio-group>
-  </v-container>
-  
-  <label>Select address:</label>
-  <v-container fluid>
-    <v-row>
-      <v-col sm="9">
-        <v-combobox
-          v-model="select"
-          :items="items"
-          label="State"
-          single
-          outlined
-          dense
-          :rules="[rules.required]"
-        ></v-combobox>
-      </v-col>
-    </v-row>
-  </v-container>
-  
-  <label>Hobbies:</label>
-   <v-container fluid>
-    <v-row>
-      <v-col>
-      <v-checkbox
-        v-model="selected"
-        label="Books"
-        value="Books"
-      ></v-checkbox>
-      </v-col>
-      <v-col>
-      <v-checkbox
-        v-model="selected"
-        label="Music"
-        value="Music"
-      ></v-checkbox>
-      </v-col>
-      <v-col>
-      <v-checkbox
-        v-model="selected"
-        label="Sports"
-        value="Sports"
-      ></v-checkbox>
-      </v-col>
-      <v-col>
-      <v-checkbox
-        v-model="selected"
-        label="Movies"
-        value="Movies"
-      ></v-checkbox>
-      </v-col>
-   </v-row>
-  </v-container>
+      <v-row>
+       <v-col class="div1" cols="4">
+            <v-text-field
+              value=""
+              v-model="name"
+              label="Name"
+              counter
+              maxlength="30"
+              :rules="[rules.required, rules.name]"
+              outlined
+            ></v-text-field>
 
-   <v-row>
-    <v-col></v-col>
-    <v-col>
+            <v-text-field
+              value=""
+              v-model="email"
+              label="Email"
+              counter
+              maxlength="50"
+              :rules="[rules.required, rules.email]"
+              outlined
+            ></v-text-field>
+          
+          <v-row>
+            <v-col sm="9">
+              <v-combobox
+                v-model="select"
+                :items="items"
+                label="Address"
+                single
+                outlined
+                dense
+                :rules="[rules.required]"
+              ></v-combobox>
+            </v-col>
+          </v-row>
+          
+          <v-row>
+            <v-col sm="5">
+              <v-text-field
+              value=""
+              v-model="pswd_length"
+              label="Password size"
+              :rules="[rules.required,rules.Password_length]"
+              outlined
+              ></v-text-field>
+            </v-col>
+      
+            <v-col>
+              <v-btn @click="pswd_generate"
+                depressed
+                color="primary"
+                >Generate password</v-btn>
+            </v-col>
+          </v-row>
+      
+          
+              <v-text-field
+                value=''
+                v-model="generatedPassword"
+                label="Generated Password"
+                outlined
+                readonly
+                ></v-text-field>
 
-      <v-btn 
-        :disabled="enablesubmit"
-        color="green"
-      >Submit</v-btn>
-    </v-col>
-    <v-col></v-col>
-    </v-row>
+      
+         
+            <label>Gender:</label>
+              <v-radio-group
+                :rules="[rules.required]"
+                v-model="row"
+                row
+                >
+              <v-radio
+                label="Male"
+                color="blue"
+                value="Male"
+              ></v-radio>
+              <v-radio
+                label="Female"
+                color="pink lighten-2"
+                value="Female"
+              ></v-radio>
+              </v-radio-group>
+          
+    
+              
+          <label>Hobbies:</label>
+              <v-row>
+                <v-col>
+                  <v-checkbox
+                    v-model="selected"
+                    label="Books"
+                    value="Books"
+                  ></v-checkbox>
+                </v-col>
+                <v-col>
+                  <v-checkbox
+                    v-model="selected"
+                    label="Music"
+                    value="Music"
+                  ></v-checkbox>
+                </v-col>
+                <v-col>
+                  <v-checkbox
+                    v-model="selected"
+                    label="Sports"
+                    value="Sports"
+                  ></v-checkbox>
+                </v-col>
+                <v-col>
+                  <v-checkbox
+                    v-model="selected"
+                    label="Movies"
+                    value="Movies"
+                  ></v-checkbox>
+                </v-col>
+              </v-row>
+            
+          <v-row>
+            <v-col></v-col>
+            <v-col>
 
-  
-    <HelloWorld /> 
+              <v-btn @click="submitdata"
+                :disabled="enablesubmit"
+                color="green"
+              >Submit</v-btn>
+            </v-col>
+            <v-col></v-col>
+          </v-row>
+          </v-col>
+
+        
+        <v-col>
+          <v-simple-table class="table1">
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      id
+                    </th>
+                    <th class="text-left">
+                      name
+                    </th>
+                    <th class="text-left">
+                      email
+                    </th>
+                    <th class="text-left">
+                      address
+                    </th>
+                    <th class="text-left">
+                      gender
+                    </th>
+                    <th class="text-left">
+                      hobbies
+                    </th>
+                    <th class="text-left">
+                      action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                 <tr v-for="(item, index) in formData" :key="index">
+                  <th scope="row">{{ index+1 }}</th>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.address }}</td>
+                    <td>{{ item.gender }}</td>
+                    <td>{{ item.hobbies }}</td>
+                    <td><v-btn
+                          depressed
+                          color="error"
+                          @click="deletedata(index)"
+                        >
+                          Delete
+                        </v-btn></td>
+                  </tr>
+                </tbody>
+              </template>
+          </v-simple-table>
+    
+          <HelloWorld /> 
+        </v-col>
+      </v-row>
+    </v-container>
   </div> 
 </template>
+
 
 <script>
   import HelloWorld from '../components/HelloWorld'
@@ -154,10 +202,10 @@
       return {
         name: '',
         pswd_length: '',
-        title: 'Preliminary report',
         email: '',
         generatedPassword: '',
         select: '',
+        
         rules: {
           required: value => !!value || 'Required.',
           counter: value => value.length <= 30 || 'Max 30 characters',
@@ -176,14 +224,17 @@
         
         },
         row:'',
+        
         items: [
           'Tamil Nadu',
           'Andhra',
           'Kerala',
           'Karnataka',
         ],
-      selected: [''],
       
+      selected: [],
+      formData: [],
+          
       } 
     },
 
@@ -205,19 +256,39 @@
         pwd += randomChar(Allowed.Symbols);
         for (let i = pwd.length; i < length; i++)
             pwd += randomChar(Object.values(Allowed).join(''));
-        this.generatedPassword = pwd ;
+        this.generatedPassword = pwd;
         }
         else
         {
          this.generatedPassword = ''
         }
+
       }
       generate()
-      }
+      },
+
+      submitdata()
+      {
+        console.log(this.pswd_length);
+        this.formData.push( {
+        
+            name:this.name,
+            email:this.email,
+            address:this.select,
+            gender:this.row,
+            hobbies:this.selected
+          
+      })
     },
+
+    deletedata(index)
+      {
+      this.formData.splice(index, 1);
+      },
+},
     computed:{
       enablesubmit() {
-        if(this.name.length ==0 || this.email.length ==0 || this.pswd_length.length ==0 || this.generatedPassword.length ==0 || this.select.length ==0){
+        if(this.name.length ==0 || this.email.length ==0 || this.pswd_length.length ==0 || this.generatedPassword.length ==0 || this.select.length ==0 || this.row ==0 || this.selected ==0){
           return true;
         }
         else{
@@ -230,12 +301,18 @@
 
 <style>
   .div1 {
-  width:500px;
-  /* background-color: lightcyan; */
-  /* align-content: center;   */
-  margin:auto;
-  box-sizing: border-box;
-  border: solid black 1px;
-  padding: 10px;
-}
+    margin:10px;
+    box-sizing: border-box;
+    border: solid black 1px;
+  }
+
+  .table1 {
+    width:auto;
+    height:auto;
+    margin:10px;
+    box-sizing: border-box;
+    border: solid black 1px;
+    padding: 10px;
+  }
+
 </style>
