@@ -123,10 +123,8 @@
             <v-col></v-col>
             <v-col>
 
-              <v-btn @click="submitdata"
-                :disabled="enablesubmit"
-                color="green"
-              >Submit</v-btn>
+            <v-btn v-if="!isEdit" depressed color ="primary" v-on:click="submitdata()">SUBMIT</v-btn>
+            <v-btn v-else depressed color ="primary" v-on:click="updateData(index)">UPDATE</v-btn>
             </v-col>
             <v-col></v-col>
           </v-row>
@@ -157,24 +155,36 @@
                       hobbies
                     </th>
                     <th class="text-left">
-                      action
+                      action1
+                    </th>
+                    <th class="text-left">
+                      action2
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                  <tr v-for="(item, index) in formData" :key="index">
                   <th scope="row">{{ index+1 }}</th>
-                    <td>{{ item.name }}</td>
+                    <td>{{ item.name | truncate(10, '...')}}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.address }}</td>
                     <td>{{ item.gender }}</td>
                     <td>{{ item.hobbies }}</td>
+                    
                     <td><v-btn
                           depressed
                           color="error"
                           @click="deletedata(index)"
                         >
                           Delete
+                        </v-btn></td>
+
+                    <td><v-btn
+                          depressed
+                          color="success"
+                          @click="editData(index)"
+                        >
+                          Edit
                         </v-btn></td>
                   </tr>
                 </tbody>
@@ -204,7 +214,7 @@
         pswd_length: '',
         email: '',
         generatedPassword: '',
-        select: '',
+        isEdit : false,
         
         rules: {
           required: value => !!value || 'Required.',
@@ -239,6 +249,14 @@
     },
 
     methods: {
+      clearForm(){
+
+      this.name = ""
+      this.email = ""
+      this.select = ""
+      this.row = ""
+      this.selected = ""
+      },
       pswd_generate() {
         const Allowed = {
         Uppers: "QWERTYUIOPASDFGHJKLZXCVBNM",
@@ -269,7 +287,7 @@
 
       submitdata()
       {
-        console.log(this.pswd_length);
+      
         this.formData.push( {
         
             name:this.name,
@@ -279,12 +297,37 @@
             hobbies:this.selected
           
       })
+      this.clearForm()
     },
 
     deletedata(index)
       {
       this.formData.splice(index, 1);
       },
+
+
+    editData(index){
+       console.log(this.formData[index].address)
+      this.name = this.formData[index].name
+      this.email = this.formData[index].email
+      this.select = this.formData[index].address
+      this.row = this.formData[index].gender
+      this.selected = this.formData[index].hobbies
+      this.index = index
+      this.isEdit = true
+
+    },
+
+    updateData(index){
+    
+      this.formData[index].name = this.name
+      this.formData[index].email = this.email
+      this.formData[index].address = this.select
+      this.formData[index].row =  this.row
+      this.formData[index].selected = this.selected
+      this.isEdit = false
+
+    },
 },
     computed:{
       enablesubmit() {
@@ -295,6 +338,16 @@
           return false
           }
         }
+    },
+
+     filters: {
+        truncate: function (text, length, suffix) {
+            if (text.length > length) {
+                return text.substring(0, length) + suffix;
+            } else {
+                return text;
+            }
+        },
     }
   }
 </script>
