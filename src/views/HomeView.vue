@@ -1,206 +1,135 @@
 <template>
   <div>
-    <v-container fluid>
-      <v-row>
-       <v-col class="div1" cols="4">
+    
+    
+    <v-row>
+      <v-col></v-col>
+      <v-col>
+      <v-card
+        class="mt-16 ml-10 mx-auto"
+        width="300"
+        height="400"
+        outlined
+        elevation="5"
+        color="grey lighten-4"
+        >
+          <v-col class="div1">
             <v-text-field
               value=""
-              v-model="name"
-              label="Name"
+              v-model="sub"
+              label="Subject"
               counter
               maxlength="30"
-              :rules="[rules.required, rules.name]"
               outlined
             ></v-text-field>
 
             <v-text-field
               value=""
-              v-model="email"
-              label="Email"
+              v-model="crdts"
+              label="Credits"
               counter
               maxlength="50"
-              :rules="[rules.required, rules.email]"
               outlined
             ></v-text-field>
-          
-          <v-row>
-            <v-col sm="9">
-              <v-combobox
-                v-model="select"
-                :items="items"
-                label="Address"
-                single
-                outlined
-                dense
-                :rules="[rules.required]"
-              ></v-combobox>
-            </v-col>
-          </v-row>
-          
-          <v-row>
-            <v-col sm="5">
-              <v-text-field
+
+            <v-text-field
               value=""
-              v-model="pswd_length"
-              label="Password size"
-              :rules="[rules.required,rules.Password_length]"
+              v-model="tchr"
+              label="Teacher"
+              counter
+              maxlength="50"
               outlined
-              ></v-text-field>
-            </v-col>
-      
-            <v-col>
-              <v-btn @click="pswd_generate"
-                depressed
-                color="primary"
-                >Generate password</v-btn>
-            </v-col>
-          </v-row>
-      
-          
-              <v-text-field
-                value=''
-                v-model="generatedPassword"
-                label="Generated Password"
-                outlined
-                readonly
-                ></v-text-field>
+            ></v-text-field>
 
-      
-         
-            <label>Gender:</label>
-              <v-radio-group
-                :rules="[rules.required]"
-                v-model="row"
-                row
-                >
-              <v-radio
-                label="Male"
-                color="blue"
-                value="Male"
-              ></v-radio>
-              <v-radio
-                label="Female"
-                color="pink lighten-2"
-                value="Female"
-              ></v-radio>
-              </v-radio-group>
-          
-    
-              
-          <label>Hobbies:</label>
-              <v-row>
-                <v-col>
-                  <v-checkbox
-                    v-model="selected"
-                    label="Books"
-                    value="Books"
-                  ></v-checkbox>
-                </v-col>
-                <v-col>
-                  <v-checkbox
-                    v-model="selected"
-                    label="Music"
-                    value="Music"
-                  ></v-checkbox>
-                </v-col>
-                <v-col>
-                  <v-checkbox
-                    v-model="selected"
-                    label="Sports"
-                    value="Sports"
-                  ></v-checkbox>
-                </v-col>
-                <v-col>
-                  <v-checkbox
-                    v-model="selected"
-                    label="Movies"
-                    value="Movies"
-                  ></v-checkbox>
-                </v-col>
-              </v-row>
-            
-          <v-row>
-            <v-col></v-col>
-            <v-col>
-
-            <v-btn v-if="!isEdit" depressed color ="primary" v-on:click="submitdata()">SUBMIT</v-btn>
-            <v-btn v-else depressed color ="primary" v-on:click="updateData(index)">UPDATE</v-btn>
-            </v-col>
-            <v-col></v-col>
-          </v-row>
           </v-col>
 
-        
-        <v-col>
-          <v-simple-table class="table1">
-              <template v-slot:default>
+        <v-row>
+          <v-col></v-col>
+          <v-col>
+            <v-btn v-if="!isEdit" depressed color ="green" v-on:click="submitData">SUBMIT</v-btn>
+            <v-btn v-else depressed color ="blue" v-on:click="updateClass">UPDATE</v-btn>
+          </v-col>
+          <v-col></v-col>
+
+        </v-row>
+      </v-card>     
+      </v-col>
+      <v-col cols="5">
+        <v-simple-table class="table1">
+            <template v-slot:default>
+              <table border="1px">
                 <thead>
                   <tr>
                     <th class="text-left">
-                      id
+                      class_id
                     </th>
                     <th class="text-left">
-                      name
+                      Subject
                     </th>
                     <th class="text-left">
-                      email
+                      Credits
                     </th>
                     <th class="text-left">
-                      address
+                      Teacher
                     </th>
-                    <th class="text-left">
-                      gender
-                    </th>
-                    <th class="text-left">
-                      hobbies
-                    </th>
-                    <th class="text-left">
-                      action1
-                    </th>
-                    <th class="text-left">
-                      action2
+                    <th class="text-center">
+                      Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                 <tr v-for="(item, index) in formData" :key="index">
-                  <th scope="row">{{ index+1 }}</th>
-                    <td>{{ item.name | truncate(10, '...')}}</td>
-                    <td>{{ item.email }}</td>
-                    <td>{{ item.address }}</td>
-                    <td>{{ item.gender }}</td>
-                    <td>{{ item.hobbies }}</td>
-                    
-                    <td><v-btn
-                          depressed
-                          color="error"
-                          @click="deletedata(index)"
-                        >
-                          Delete
-                        </v-btn></td>
-
-                    <td><v-btn
-                          depressed
-                          color="success"
-                          @click="editData(index)"
-                        >
-                          Edit
-                        </v-btn></td>
+                  <tr v-for="(item, index) in list" v-bind:key="item.class_id">
+                    <td>{{ item.class_id }}</td>
+                    <td>{{ item.subject }}</td>
+                    <td>{{ item.credits }}</td>
+                    <td>{{ item.teacher }}</td>
+                    <td>
+                      <v-btn
+                        class="mx-2"
+                        fab
+                        dark
+                        x-small
+                        color="cyan"
+                        @click=" editData(index)"
+                      >
+                        <v-icon dark>
+                          mdi-pencil
+                        </v-icon>
+                      </v-btn>
+                      
+                      <v-btn
+                        class="mx-2"
+                        fab
+                        dark
+                        x-small
+                        color="black"
+                        @click="deleteData(index)"
+                      >
+                        <v-icon dark>
+                          mdi-trash-can
+                        </v-icon>
+                      </v-btn>
+                    </td>
                   </tr>
                 </tbody>
-              </template>
-          </v-simple-table>
-    
-          <HelloWorld /> 
-        </v-col>
-      </v-row>
-    </v-container>
+              </table>
+            </template>
+        </v-simple-table>
+      <HelloWorld />
+      </v-col>
+      <v-col></v-col>
+
+    </v-row>
+   
+   
   </div> 
 </template>
 
 
 <script>
+  
   import HelloWorld from '../components/HelloWorld'
+  import axios from 'axios'
 
   export default {
     name: 'HomeView',
@@ -210,162 +139,106 @@
     },
     data () {
       return {
-        name: '',
-        pswd_length: '',
-        email: '',
-        generatedPassword: '',
-        isEdit : false,
-        
-        rules: {
-          required: value => !!value || 'Required.',
-          counter: value => value.length <= 30 || 'Max 30 characters',
-          email: value => {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return pattern.test(value) || 'Invalid e-mail.'
-          },
-          name: value => {
-            const pattern = /^[a-zA-Z\s]*$/
-            return pattern.test(value) || 'Invalid name'
-          },
-          Password_length: value => {
-            const pattern = /^([8-9]|1[0-9]|20)*$/
-            return pattern.test(value) || 'Input must be number and Length must be 8 to 20 characters'
-          },
-        
-        },
-        row:'',
-        
-        items: [
-          'Tamil Nadu',
-          'Andhra',
-          'Kerala',
-          'Karnataka',
-        ],
-      
-      selected: [],
-      formData: [],
-          
+        student:{},
+        id:'',
+        sub:'',
+        crdts:'',
+        tchr:'',
+        isEdit:false,
+        list: [],
+        row:''
       } 
+    },
+    
+    mounted(){
+      
+      axios.get('http://127.0.0.1:3333/class/')
+      .then((response) => {
+      this.list=response.data
+      })
     },
 
     methods: {
-      clearForm(){
-
-      this.name = ""
-      this.email = ""
-      this.select = ""
-      this.row = ""
-      this.selected = ""
-      },
-      pswd_generate() {
-        const Allowed = {
-        Uppers: "QWERTYUIOPASDFGHJKLZXCVBNM",
-        Lowers: "qwertyuiopasdfghjklzxcvbnm",
-        Numbers: "1234567890",
-        Symbols: "!@#$%^&*"
-      }
-      const randomChar = (str) => str.charAt(Math.floor(Math.random() * str.length))
-      const generate = (length=this.pswd_length) => { 
-        let pwd = "";
-        if(8<=this.pswd_length && this.pswd_length<=20){
-        pwd += randomChar(Allowed.Uppers);
-        pwd += randomChar(Allowed.Lowers); 
-        pwd += randomChar(Allowed.Numbers); 
-        pwd += randomChar(Allowed.Symbols);
-        for (let i = pwd.length; i < length; i++)
-            pwd += randomChar(Object.values(Allowed).join(''));
-        this.generatedPassword = pwd;
-        }
-        else
-        {
-         this.generatedPassword = ''
-        }
-
-      }
-      generate()
-      },
-
-      submitdata()
-      {
-      
-        this.formData.push( {
         
-            name:this.name,
-            email:this.email,
-            address:this.select,
-            gender:this.row,
-            hobbies:this.selected
-          
-      })
-      this.clearForm()
-    },
-
-    deletedata(index)
-      {
-      this.formData.splice(index, 1);
+      submitData() {
+      axios
+        .post("http://127.0.0.1:3333/class/", {
+          subject: this.sub,
+          credits: this.crdts,
+          teacher: this.tchr,
+        })
+        .then((response) => {
+          console.log(response.data);
+          // this.list.push(data);
+          this.sub = "";
+          this.crdts = "";
+          this.tchr = "";
+        });
       },
 
+      deleteData(id) {
+      console.log("delete")
+        axios.delete('http://127.0.0.1:3333/class/'+this.list[id].class_id)
+      },
 
-    editData(index){
-       console.log(this.formData[index].address)
-      this.name = this.formData[index].name
-      this.email = this.formData[index].email
-      this.select = this.formData[index].address
-      this.row = this.formData[index].gender
-      this.selected = this.formData[index].hobbies
-      this.index = index
-      this.isEdit = true
+      editData(id){
+        console.log("edit")
+        this.classid = this.list[id].class_id
+        this.sub = this.list[id].subject
+        this.crdts = this.list[id].credits
+        this.tchr = this.list[id].teacher
+        this.row=id
+        this.isEdit=true
+        console.log(this.classid);
+      },
 
+      updateClass(){
+      let updateData = {}
+      updateData.id = this.classid
+      if(this.list[this.row].subject!= this.sub){
+        updateData.subject = this.sub
+      }
+      if(this.list[this.row].credits!= this.crdts){
+        updateData.credits = this.crdts
+      }
+      if(this.list[this.row].teacher!= this.tchr){
+        updateData.teacher = this.tchr
+      }
+      console.log(updateData);
+      axios.patch('http://127.0.0.1:3333/class/',updateData)
+      .then((response) => {
+        console.log(response.data)
+      })
+      this.isEdit=false
+      this.sub = "";
+      this.crdts = "";
+      this.tchr = "";
     },
-
-    updateData(index){
-    
-      this.formData[index].name = this.name
-      this.formData[index].email = this.email
-      this.formData[index].address = this.select
-      this.formData[index].row =  this.row
-      this.formData[index].selected = this.selected
-      this.isEdit = false
-
-    },
-},
-    computed:{
-      enablesubmit() {
-        if(this.name.length ==0 || this.email.length ==0 || this.pswd_length.length ==0 || this.generatedPassword.length ==0 || this.select.length ==0 || this.row ==0 || this.selected ==0){
-          return true;
-        }
-        else{
-          return false
-          }
-        }
-    },
-
-     filters: {
-        truncate: function (text, length, suffix) {
-            if (text.length > length) {
-                return text.substring(0, length) + suffix;
-            } else {
-                return text;
-            }
-        },
-    }
   }
+
+
+    
+    
+    
+    
+  }
+
+    
+
 </script>
 
 <style>
-  .div1 {
-    margin:10px;
-    box-sizing: border-box;
-    border: solid black 1px;
-  }
+
 
   .table1 {
     width:auto;
     height:auto;
-    margin:10px;
-    box-sizing: border-box;
-    border: solid black 1px;
+    margin:20px;
     padding: 10px;
   }
+
+  /* .form1{
+    
+  } */
 
 </style>
