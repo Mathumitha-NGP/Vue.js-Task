@@ -10,8 +10,8 @@
             v-model="eml"
                 label="Email"
                 placeholder="Enter your email id"
+                :rules="[rules.required]"
                 outlined
-                clearable
             ></v-text-field>
 
             <v-text-field
@@ -28,13 +28,7 @@
             <v-row>
                 <v-col></v-col>
                     <v-col>
-                        <v-btn
-                        color="green"
-                        dark
-                        to ="/"
-                        >
-                            <router-link to="/home">Login</router-link>
-                        </v-btn>
+                            <v-btn color="green" @click="login">Login</v-btn>
                     </v-col>
                 <v-col></v-col>
             </v-row>
@@ -45,6 +39,7 @@
 <script>
 
 
+
 export default {
     name: 'LoginView',
     data () {
@@ -53,6 +48,7 @@ export default {
         pswd:'',
         show1: false,
         password: 'Password',
+        mail:'',
         rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 && v.length <= 20|| 'Min 8 to Max 20 characters',
@@ -62,6 +58,17 @@ export default {
     },
 
     methods: {
+
+        login() {
+            this.mail='Mathu@gmail.com' 
+            if(this.eml.toLowerCase == this.mail.toLowerCase  && this.pswd == 'Mathu@123'){
+                this.$router.push({ path: "/home" });
+            
+            localStorage.setItem("userMail", this.eml);
+
+            }
+
+        }
 
     }
   }
